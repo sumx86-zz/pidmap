@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sys/types.h>
-#include <elf.h>
 #include "strtokenize.h"
 
 #ifdef __cplusplus
