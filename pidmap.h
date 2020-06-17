@@ -18,6 +18,10 @@ extern "C" {
     sprintf( pidmap_err, "%s", str ); return ret;\
 }
 
+#ifndef NO_IMG
+    #define NO_IMG "no-img\n"
+#endif
+
 char pidmap_err[0xff];
 
 static FILE *_fp;
@@ -54,8 +58,8 @@ void __define_mmin( struct vma_list *vma, char *buff );
 void __define_inode( struct vma_list *vma, char *buff );
 void __define_image( struct vma_list *vma, char *buff );
 void __release_entries( char **entries, int n );
-int real_pid( pid_t pid );
 char * pidmap__get_err( void );
+int iswsp( char *str );
 
 #ifdef __cplusplus
 }

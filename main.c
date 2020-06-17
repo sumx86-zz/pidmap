@@ -15,14 +15,14 @@ int main( int argc, char **argv )
     }
 
     while ( vma_list != NULL ) {
-        if ( vma_list->perms & R && vma_list->perms & X ) {
+        //if ( vma_list->perms & R && vma_list->perms & X ) {
             printf( "%lu\n", vma_list->start );
             printf( "%lu\n", vma_list->end );
             printf( "%lu\n", vma_list->offset );
             printf( "%s\n",  vma_list->mmi );
             printf( "%lu\n", vma_list->inode );
             printf( "%s\n",  vma_list->image );
-        }
+        //}
         vma_list = vma_list->next;
     }
     pidmap__release( vma_list );

@@ -2,7 +2,7 @@
 
 int __parse_line( char *buff, struct vma_list *vma )
 {
-    char *entries[0x7] = {0x00};
+    char *entries[0x6] = {0x00};
     int n = 0x00;
 
     if ( (n = __strtokenize( buff, entries, " " )) < 0x00 )
@@ -13,7 +13,7 @@ int __parse_line( char *buff, struct vma_list *vma )
     __define_offset(    vma, entries[2] );
     __define_mmin(      vma, entries[3] );
     __define_inode(     vma, entries[4] );
-    __define_image(     vma, entries[5] );
+    __define_image(     vma, iswsp( entries[5] ) ? NO_IMG : entries[5] );
 
     __release_entries( entries, n );
     return 0;
@@ -96,19 +96,17 @@ struct vma_list * pidmap__get_maps( pid_t pid )
 struct vma_list * __new_vma_entry( char *buff )
 {
     struct vma_list *vma_entry = (struct vma_list *) malloc( sizeof(struct vma_list) );
-    if ( !vma_entry ) {
+    if ( vma_entry == NULL )
         pidmap__set_err(
             strerror( errno ),
             NULL
         );
-    }
     if ( buff != NULL ) {
-        if ( __parse_line( buff, vma_entry ) == -1 && errno == ENOMEM ) {
+        if ( __parse_line( buff, vma_entry ) == -1 && errno == ENOMEM )
             pidmap__set_err(
                 strerror( errno ),
                 NULL
             );
-        }
     }
     vma_entry->next = NULL;
     return vma_entry;
@@ -144,4 +142,13 @@ char * pidmap__get_err( void ) {
 void __release_entries( char **entries, int n ) {
     for ( int i = 0 ; i < n ; i++ )
         free( entries[i] );
+}
+
+int iswsp( char *str )
+{
+    while ( *str != '\x00' ) {
+        if ( *str > 32 ) return 0;
+        str++;
+    }
+    return 1;
 }
