@@ -15,7 +15,8 @@ int __parse_line( char *buff, struct vma_list *vma )
     __define_inode(     vma, entries[4] );
     __define_image(     vma, iswsp( entries[5] ) ? NO_IMG : entries[5] );
 
-    __release_entries( entries, n );
+    for ( int i = 0 ; i < n ; i++ )
+        free( entries[i] );
     return 0;
 }
 
@@ -137,11 +138,6 @@ void pidmap__release( struct vma_list *head )
 
 char * pidmap__get_err( void ) {
     return pidmap_err;
-}
-
-void __release_entries( char **entries, int n ) {
-    for ( int i = 0 ; i < n ; i++ )
-        free( entries[i] );
 }
 
 int iswsp( char *str )
