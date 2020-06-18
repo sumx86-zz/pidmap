@@ -56,7 +56,6 @@ void __define_offset( struct vma_list *vma, char *buff );
 void __define_mmin( struct vma_list *vma, char *buff );
 void __define_inode( struct vma_list *vma, char *buff );
 void __define_image( struct vma_list *vma, char *buff );
-void __release_entries( char **entries, int n );
 char * pidmap__get_err( void );
 int iswsp( char *str );
 
