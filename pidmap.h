@@ -22,8 +22,10 @@ extern "C" {
     #define NO_IMG "no-img\n"
 #endif
 
-char pidmap_err[0xff];
+// pidmap error buffer
+static char pidmap_err[0xff];
 
+// pidmap file
 static FILE *_fp;
 
 typedef enum {
