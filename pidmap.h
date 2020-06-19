@@ -39,7 +39,7 @@ typedef enum {
 struct vma_list {
     uintptr_t start;
     uintptr_t end;
-    vma_perm_t perms;
+    ushort perms;
     uintptr_t offset;
     char mmi[10];
     uintptr_t inode;
@@ -53,12 +53,12 @@ uintptr_t __hexd( const char *str, size_t size );
 int __add_vma( struct vma_list *head, char *buff );
 void pidmap__release( struct vma_list *head );
 int pidmap__parse_line( char *buff, struct vma_list *vma );
-void __define_maps_addr( struct vma_list *vma, char *buff );
-void __define_perms( struct vma_list *vma_list, char *buff );
-void __define_offset( struct vma_list *vma, char *buff );
-void __define_mmin( struct vma_list *vma, char *buff );
-void __define_inode( struct vma_list *vma, char *buff );
-void __define_image( struct vma_list *vma, char *buff );
+void __define_maps_addr( struct vma_list *vma, const char *buff );
+void __define_perms( struct vma_list *vma_list, const char *buff );
+void __define_offset( struct vma_list *vma, const char *buff );
+void __define_mmin( struct vma_list *vma, const char *buff );
+void __define_inode( struct vma_list *vma, const char *buff );
+void __define_image( struct vma_list *vma, const char *buff );
 char * pidmap__get_err( void );
 int iswsp( char *str );
 

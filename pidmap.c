@@ -20,7 +20,7 @@ int __parse_line( char *buff, struct vma_list *vma )
     return 0;
 }
 
-void __define_maps_addr( struct vma_list *vma, char *buff )
+void __define_maps_addr( struct vma_list *vma, const char *buff )
 {
     char hex1[25] = {0x00};
     char hex2[25] = {0x00};
@@ -37,7 +37,7 @@ void __define_maps_addr( struct vma_list *vma, char *buff )
     vma->end   = strtoul( hex2, NULL, 16 );
 }
 
-void __define_perms( struct vma_list *vma_list, char *buff )
+void __define_perms( struct vma_list *vma_list, const char *buff )
 {
     if ( buff[0] == 'r' )
         vma_list->perms |= R;
@@ -54,19 +54,19 @@ void __define_perms( struct vma_list *vma_list, char *buff )
         vma_list->perms |= S;
 }
 
-void __define_offset( struct vma_list *vma, char *buff ) {
+void __define_offset( struct vma_list *vma, const char *buff ) {
     vma->offset = strtoul( buff, NULL, 16 );
 }
 
-void __define_mmin( struct vma_list *vma, char *buff ) {
+void __define_mmin( struct vma_list *vma, const char *buff ) {
     strcpy( vma->mmi, buff );
 }
 
-void __define_inode( struct vma_list *vma, char *buff ) {
+void __define_inode( struct vma_list *vma, const char *buff ) {
     vma->inode = strtoul( buff, NULL, 16 );
 }
 
-void __define_image( struct vma_list *vma, char *buff ) {
+void __define_image( struct vma_list *vma, const char *buff ) {
     strcpy( vma->image, buff );
 }
 
