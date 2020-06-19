@@ -9,10 +9,12 @@ int main( int argc, char **argv )
 {
     pid_t pid = getpid();
     
-    struct vma_list *vma_list = pidmap__get_maps( pid );
-    if ( !vma_list ) {
+    struct vma_list *vma_list, *head;
+    if ( (vma_list = pidmap__get_maps( pid )) == NULL ) {
         __die( pidmap__get_err() );
     }
+
+    head = vma_list;
 
     while ( vma_list != NULL ) {
         if ( vma_list->perms & R && vma_list->perms & X ) {
@@ -25,6 +27,6 @@ int main( int argc, char **argv )
         }
         vma_list = vma_list->next;
     }
-    pidmap__release( vma_list );
+    pidmap__release( head );
     return 0;
 }
