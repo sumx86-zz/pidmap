@@ -52,7 +52,7 @@ struct vma_list * __new_vma_entry( char *buff );
 uintptr_t __hexd( const char *str, size_t size );
 int __add_vma( struct vma_list *head, char *buff );
 void pidmap__release( struct vma_list *head );
-int pidmap__parse_line( char *buff, struct vma_list *vma );
+int __parse_line( char *buff, struct vma_list *vma );
 void __define_maps_addr( struct vma_list *vma, const char *buff );
 void __define_perms( struct vma_list *vma_list, const char *buff );
 void __define_offset( struct vma_list *vma, const char *buff );
