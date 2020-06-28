@@ -126,9 +126,11 @@ int __add_vma( struct vma_list *head, char *buff )
         vma_entry = vma_entry->next;
 
     if ( (vma_entry->next = __new_vma_entry( buff )) == NULL )
-        return -1;
+        goto bad;
 
     return 0;
+    bad:
+        return (-1);
 }
 
 void pidmap__release( struct vma_list *head )
