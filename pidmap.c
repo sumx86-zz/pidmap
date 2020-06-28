@@ -6,7 +6,7 @@ int __parse_line( char *buff, struct vma_list *vma )
     int n = 0x00;
 
     if ( (n = __strtokenize( buff, entries, " " )) < 0x00 )
-        return -1;
+        goto bad;
 
     __define_maps_addr( vma, entries[0] );
     __define_perms(     vma, entries[1] );
@@ -18,6 +18,9 @@ int __parse_line( char *buff, struct vma_list *vma )
     for ( int i = 0 ; i < n ; i++ )
         free( entries[i] );
     return 0;
+
+    bad:
+        return (-1);
 }
 
 void __define_maps_addr( struct vma_list *vma, const char *buff )
@@ -84,14 +87,17 @@ struct vma_list * pidmap__get_maps( pid_t pid )
     }
     struct vma_list *head = __new_vma_entry( NULL );
     if ( !head )
-        return NULL;
+        goto bad;
 
     char buff[0xff] = {0x00};
     while ( fgets( buff, sizeof( buff ), _fp ) ) {
         if ( __add_vma( head, buff ) < 0 )
-            return NULL;
+            goto bad;
     }
     return head;
+
+    bad:
+        return (NULL);
 }
 
 struct vma_list * __new_vma_entry( char *buff )
@@ -116,7 +122,6 @@ struct vma_list * __new_vma_entry( char *buff )
 int __add_vma( struct vma_list *head, char *buff )
 {
     struct vma_list *vma_entry = head;
-
     while ( vma_entry->next != NULL )
         vma_entry = vma_entry->next;
 
